@@ -19,7 +19,8 @@ const TaskList = () => {
 
   return (
     <div>
-      <h3>Your Tasks</h3>
+      <h3 style={{ marginBottom: "16px" }}>Your Tasks</h3>
+
 
       {tasks.map((task) => (
         <TaskItem key={task._id} task={task} onUpdate={fetchTasks} />
