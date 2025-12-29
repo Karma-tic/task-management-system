@@ -1,14 +1,44 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
+function AppRoutes() {
+  const { user } = useAuth();
+
   return (
-    <div>
-      <h1>Task Management System</h1>
-      <Login />
-      <Register />
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigate to="/dashboard" />} />
+
+      <Route
+        path="/login"
+        element={user ? <Navigate to="/dashboard" /> : <Login />}
+      />
+
+      <Route
+        path="/register"
+        element={user ? <Navigate to="/dashboard" /> : <Register />}
+      />
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <AppRoutes />
+    </Router>
+  );
+}

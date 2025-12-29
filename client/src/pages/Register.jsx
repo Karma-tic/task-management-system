@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { register } = useAuth();
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -11,6 +13,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await register(name, email, password);
+    navigate("/dashboard");
   };
 
   return (
