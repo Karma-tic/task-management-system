@@ -9,30 +9,36 @@
   background: #ffffff;
   border-radius: 10px;
   padding: 20px;
-  margin-bottom: 25px;
+  margin-bottom: 40px;
+
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
+
 
 .card-title {
   font-size: 20px;
   margin-bottom: 15px;
 }
 
-/* Form layout */
 .task-form input,
 .task-form textarea,
 .task-form select {
   width: 100%;
+  min-height: 44px;
   padding: 10px 12px;
-  margin-bottom: 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
+
 .task-form textarea {
+  min-height: 100px;
   resize: vertical;
-  min-height: 80px;
 }
+
+
 
 .task-form button {
   background: #4f46e5;
@@ -71,4 +77,13 @@
 .pagination button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.task-form button {
+  margin-top: 8px;
+  align-self: flex-start;
 }

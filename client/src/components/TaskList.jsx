@@ -11,7 +11,8 @@ const TaskList = () => {
   const fetchTasks = async () => {
     const data = await getTasks(page);
     setTasks(data.tasks);
-    setPages(data.pagination.pages);
+    setPages(data.pagination.pages || 1);
+
   };
 
   useEffect(() => {
@@ -28,7 +29,9 @@ const TaskList = () => {
         <TaskItem key={task._id} task={task} onUpdate={fetchTasks} />
       ))}
 
-      <div className="pagination">
+      {tasks.length > 0 && (
+  <div className="pagination">
+
         <button disabled={page === 1} onClick={() => setPage(page - 1)}>
           Prev
         </button>
@@ -41,7 +44,9 @@ const TaskList = () => {
           Next
         </button>
       </div>
+      )}
     </div>
+      
   );
 };
 
