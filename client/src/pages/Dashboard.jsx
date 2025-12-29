@@ -1,24 +1,16 @@
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import TaskList from "../components/TaskList";
+import Layout from "../components/Layout";
 import TaskForm from "../components/TaskForm";
+import TaskList from "../components/TaskList";
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
   const [refresh, setRefresh] = useState(false);
 
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <p>Welcome, {user?.name}</p>
-
-      <button onClick={logout}>Logout</button>
-
-      <hr />
-
+    <Layout>
       <TaskForm onCreated={() => setRefresh(!refresh)} />
       <TaskList key={refresh} />
-    </div>
+    </Layout>
   );
 };
 
