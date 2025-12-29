@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createTask } from "../services/taskService";
+import "../styles/dashboard.css";
 
 const TaskForm = ({ onCreated }) => {
   const [title, setTitle] = useState("");
@@ -27,48 +28,42 @@ const TaskForm = ({ onCreated }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Create Task</h3>
+    <div className="card">
+      <h3 className="card-title">Create Task</h3>
 
-      <input
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
+      <form className="task-form" onSubmit={handleSubmit}>
+        <input
+          placeholder="Task title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
 
-      <br />
+        <textarea
+          placeholder="Task description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
 
-      <textarea
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
+        <input
+          type="date"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+          required
+        />
 
-      <br />
+        <select
+          value={priority}
+          onChange={(e) => setPriority(e.target.value)}
+        >
+          <option value="low">Low priority</option>
+          <option value="medium">Medium priority</option>
+          <option value="high">High priority</option>
+        </select>
 
-      <input
-        type="date"
-        value={dueDate}
-        onChange={(e) => setDueDate(e.target.value)}
-        required
-      />
-
-      <br />
-
-      <select
-        value={priority}
-        onChange={(e) => setPriority(e.target.value)}
-      >
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
-
-      <br />
-
-      <button type="submit">Add Task</button>
-    </form>
+        <button type="submit">Add Task</button>
+      </form>
+    </div>
   );
 };
 

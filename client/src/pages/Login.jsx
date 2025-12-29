@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import "../styles/auth.css";
 
 const Login = () => {
   const { login } = useAuth();
@@ -12,48 +13,48 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await login(email, password);
-      navigate("/dashboard"); // ✅ redirect after success
-    } catch (err) {
+      navigate("/dashboard");
+    } catch {
       setError("Invalid email or password");
     }
   };
 
   return (
-  <div style={{ maxWidth: "400px", margin: "60px auto" }}>
-    <h2>Login</h2>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2 className="auth-title">Sign In</h2>
 
-    {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <div className="auth-error">{error}</div>}
 
-    <form onSubmit={handleSubmit}>
-      <input
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        style={{ width: "100%", marginBottom: "10px" }}
-      />
+        <form onSubmit={handleSubmit}>
+          <input
+            className="auth-input"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        style={{ width: "100%", marginBottom: "10px" }}
-      />
+          <input
+            className="auth-input"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-      <button style={{ width: "100%" }} type="submit">
-        Login
-      </button>
-    </form>
+          <button className="auth-button" type="submit">
+            Login
+          </button>
+        </form>
 
-    <p style={{ marginTop: "15px", textAlign: "center" }}>
-      Don’t have an account?{" "}
-      <a href="/register">Create one</a>
-    </p>
-  </div>
-);
+        <div className="auth-footer">
+          Don’t have an account? <a href="/register">Create one</a>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Login;

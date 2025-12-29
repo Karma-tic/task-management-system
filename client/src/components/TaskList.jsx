@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTasks } from "../services/taskService";
 import TaskItem from "./TaskItem";
+import "../styles/dashboard.css";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -18,20 +19,21 @@ const TaskList = () => {
   }, [page]);
 
   return (
-    <div>
-      <h3 style={{ marginBottom: "16px" }}>Your Tasks</h3>
+    <div className="card">
+      <h3 className="section-title">Your Tasks</h3>
 
+      {tasks.length === 0 && <p>No tasks created yet.</p>}
 
       {tasks.map((task) => (
         <TaskItem key={task._id} task={task} onUpdate={fetchTasks} />
       ))}
 
-      <div style={{ marginTop: "10px" }}>
+      <div className="pagination">
         <button disabled={page === 1} onClick={() => setPage(page - 1)}>
           Prev
         </button>
 
-        <span style={{ margin: "0 10px" }}>
+        <span>
           Page {page} of {pages}
         </span>
 

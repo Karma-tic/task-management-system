@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import "../styles/auth.css";
 
 const Register = () => {
   const { register } = useAuth();
@@ -17,44 +18,44 @@ const Register = () => {
   };
 
   return (
-  <div style={{ maxWidth: "400px", margin: "60px auto" }}>
-    <h2>Register</h2>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2 className="auth-title">Create Account</h2>
 
-    <form onSubmit={handleSubmit}>
-      <input
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        style={{ width: "100%", marginBottom: "10px" }}
-      />
+        <form onSubmit={handleSubmit}>
+          <input
+            className="auth-input"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-      <input
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        style={{ width: "100%", marginBottom: "10px" }}
-      />
+          <input
+            className="auth-input"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        style={{ width: "100%", marginBottom: "10px" }}
-      />
+          <input
+            className="auth-input"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-      <button style={{ width: "100%" }} type="submit">
-        Register
-      </button>
-    </form>
+          <button className="auth-button" type="submit">
+            Register
+          </button>
+        </form>
 
-    <p style={{ marginTop: "15px", textAlign: "center" }}>
-      Already have an account?{" "}
-      <a href="/login">Login</a>
-    </p>
-  </div>
-);
-
+        <div className="auth-footer">
+          Already have an account? <a href="/login">Login</a>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Register;
