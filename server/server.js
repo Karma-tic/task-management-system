@@ -17,9 +17,7 @@ app.get("/", (req, res) => {
   res.status(200).send("Task Manager API is running successfully");
 });
 
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "OK" });
-});
+app.use("/api/auth", require("./routes/authRoutes"));
 
 const PORT = process.env.PORT || 5001;
 
