@@ -7,22 +7,22 @@ const TaskList = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
 
-  useEffect(() => {
-    fetchTasks();
-  }, [page]);
-
   const fetchTasks = async () => {
     const data = await getTasks(page);
     setTasks(data.tasks);
     setPages(data.pagination.pages);
   };
 
+  useEffect(() => {
+    fetchTasks();
+  }, [page]);
+
   return (
     <div>
       <h3>Your Tasks</h3>
 
       {tasks.map((task) => (
-        <TaskItem key={task._id} task={task} />
+        <TaskItem key={task._id} task={task} onUpdate={fetchTasks} />
       ))}
 
       <div style={{ marginTop: "10px" }}>

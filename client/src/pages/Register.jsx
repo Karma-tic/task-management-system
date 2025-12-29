@@ -17,36 +17,44 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
+  <div style={{ maxWidth: "400px", margin: "60px auto" }}>
+    <h2>Register</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <br />
+    <form onSubmit={handleSubmit}>
+      <input
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        style={{ width: "100%", marginBottom: "10px" }}
+      />
 
-        <input
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
+      <input
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        style={{ width: "100%", marginBottom: "10px" }}
+      />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        style={{ width: "100%", marginBottom: "10px" }}
+      />
 
-        <button type="submit">Register</button>
-      </form>
-    </div>
-  );
+      <button style={{ width: "100%" }} type="submit">
+        Register
+      </button>
+    </form>
+
+    <p style={{ marginTop: "15px", textAlign: "center" }}>
+      Already have an account?{" "}
+      <a href="/login">Login</a>
+    </p>
+  </div>
+);
+
 };
 
 export default Register;
