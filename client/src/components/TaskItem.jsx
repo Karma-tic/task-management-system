@@ -12,6 +12,20 @@ const statusStyles = {
   completed: { background: "#e8f5e9", color: "#2e7d32" },
 };
 
+const badgeBaseStyle = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "2px 10px",
+  height: "22px",
+  borderRadius: "999px",
+  fontSize: "12px",
+  fontWeight: "600",
+  lineHeight: "1",
+  textTransform: "capitalize",
+  whiteSpace: "nowrap",
+};
+
 const TaskItem = ({ task, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(task.title);
@@ -75,14 +89,17 @@ const TaskItem = ({ task, onUpdate }) => {
         </>
       ) : (
         <>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <h3 style={{ margin: 0 }}>{task.title}</h3>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <h3
+              style={{ cursor: "pointer", color: "#4f46e5" }}
+              onClick={() => (window.location.href = `/tasks/${task._id}`)}
+            >
+              {task.title}
+            </h3>
 
             <span
               style={{
-                padding: "4px 10px",
-                borderRadius: "12px",
-                fontSize: "12px",
+                ...badgeBaseStyle,
                 ...statusStyles[task.status],
               }}
             >
@@ -90,16 +107,16 @@ const TaskItem = ({ task, onUpdate }) => {
             </span>
           </div>
 
-          <p style={{ margin: "8px 0", color: "#555" }}>
-            {task.description}
+          <p style={{ margin: "8px 0", color: "#555" }}>{task.description}</p>
+
+          <p style={{ fontSize: "13px", color: "#555" }}>
+            Assigned to: {task.assignedTo?.name || "Unassigned"}
           </p>
 
           <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
             <span
               style={{
-                padding: "4px 10px",
-                borderRadius: "12px",
-                fontSize: "12px",
+                ...badgeBaseStyle,
                 ...priorityStyles[task.priority],
               }}
             >

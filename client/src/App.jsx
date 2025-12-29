@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import TaskDetails from "./pages/TaskDetails";
 
 function AppRoutes() {
   const { user } = useAuth();
@@ -31,6 +32,15 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route
+  path="/tasks/:id"
+  element={
+    <ProtectedRoute>
+      <TaskDetails />
+    </ProtectedRoute>
+  }
+/>
+
     </Routes>
   );
 }

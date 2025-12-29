@@ -19,4 +19,6 @@ router.route("/:id")
   .put(protect, updateTask)
   .delete(protect, deleteTask);
 
+  router.get("/:id", protect, getTaskById);
+
 module.exports = router;

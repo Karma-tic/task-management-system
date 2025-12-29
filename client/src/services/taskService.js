@@ -19,3 +19,7 @@ export const deleteTask = async (id) => {
   const res = await api.delete(`/api/tasks/${id}`);
   return res.data;
 };
+export const getTaskById = async (id) => {
+  const res = await api.get(`/api/tasks/${id}`);
+  return res.data;
+};

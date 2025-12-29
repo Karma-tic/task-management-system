@@ -25,18 +25,26 @@ exports.registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-    });
+    const adminEmail = process.env.ADMIN_EMAIL;
+
+const role = email === adminEmail ? "admin" : "user";
+
+const user = await User.create({
+  name,
+  email,
+  password: hashedPassword,
+  role,
+});
+
 
     res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user._id),
-    });
+  _id: user._id,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+  token: generateToken(user._id),
+});
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -61,11 +69,13 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
 
     res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user._id),
-    });
+  _id: user._id,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+  token: generateToken(user._id),
+});
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

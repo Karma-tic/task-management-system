@@ -5,8 +5,15 @@ exports.createTask = async (req, res) => {
   try {
     const { title, description, dueDate, priority, assignedTo } = req.body;
 
-    if (!title || !dueDate || !assignedTo) {
-      return res.status(400).json({ message: "Required fields missing" });
+    // Only admin can assign tasks to other users
+    if (
+      assignedTo &&
+      req.user.role !== "admin" &&
+      assignedTo !== req.user.id
+    ) {
+      return res.status(403).json({
+        message: "Only admin can assign tasks to other users",
+      });
     }
 
     const task = await Task.create({
@@ -14,8 +21,8 @@ exports.createTask = async (req, res) => {
       description,
       dueDate,
       priority,
-      assignedTo,
-      createdBy: req.user._id,
+      assignedTo: assignedTo || req.user.id,
+      createdBy: req.user.id,
     });
 
     res.status(201).json(task);
@@ -24,7 +31,7 @@ exports.createTask = async (req, res) => {
   }
 };
 
-// GET TASKS (with pagination + filtering)
+// GET TASKS (pagination + role filtering)
 exports.getTasks = async (req, res) => {
   try {
     const page = Number(req.query.page) || 1;
@@ -33,7 +40,7 @@ exports.getTasks = async (req, res) => {
 
     let filter = {};
 
-    // Non-admin users see only their tasks
+    // Non-admins only see their assigned tasks
     if (req.user.role !== "admin") {
       filter.assignedTo = req.user._id;
     }
@@ -74,11 +81,16 @@ exports.getTaskById = async (req, res) => {
       return res.status(404).json({ message: "Task not found" });
     }
 
-    // Access control
-    if (
-      req.user.role !== "admin" &&
-      task.assignedTo._id.toString() !== req.user._id.toString()
-    ) {
+    const isAdmin = req.user.role === "admin";
+    const isAssigned =
+      task.assignedTo &&
+      task.assignedTo._id.toString() === req.user._id.toString();
+
+    const isCreator =
+      task.createdBy &&
+      task.createdBy._id.toString() === req.user._id.toString();
+
+    if (!isAdmin && !isAssigned && !isCreator) {
       return res.status(403).json({ message: "Access denied" });
     }
 
@@ -88,6 +100,7 @@ exports.getTaskById = async (req, res) => {
   }
 };
 
+
 // UPDATE TASK
 exports.updateTask = async (req, res) => {
   try {
@@ -95,11 +108,24 @@ exports.updateTask = async (req, res) => {
 
     if (!task) return res.status(404).json({ message: "Task not found" });
 
+    // Admin can update anything
+    // User can update only their assigned task
     if (
       req.user.role !== "admin" &&
       task.assignedTo.toString() !== req.user._id.toString()
     ) {
       return res.status(403).json({ message: "Not authorized" });
+    }
+
+    // Prevent non-admins from reassigning
+    if (
+      req.body.assignedTo &&
+      req.user.role !== "admin" &&
+      req.body.assignedTo !== req.user.id
+    ) {
+      return res
+        .status(403)
+        .json({ message: "Only admin can reassign tasks" });
     }
 
     Object.assign(task, req.body);
@@ -119,9 +145,10 @@ exports.deleteTask = async (req, res) => {
 
     if (!task) return res.status(404).json({ message: "Task not found" });
 
+    // Admin can delete all, users only their own
     if (
       req.user.role !== "admin" &&
-      task.createdBy.toString() !== req.user._id.toString()
+      task.assignedTo.toString() !== req.user._id.toString()
     ) {
       return res.status(403).json({ message: "Not authorized" });
     }
