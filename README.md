@@ -40,6 +40,9 @@ Screenshots
 ![Task Description](screenshots/task-description.png)
 
 
+Video Link: https://youtu.be/uV_czYkoAlY?si=MeaQkiP-CvGc--7V
+
+
 
 Tech Stack
 
