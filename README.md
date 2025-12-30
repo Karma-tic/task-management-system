@@ -35,8 +35,9 @@ Screenshots
 ![Sign in](screenshots/sign-in.png)
 ![Admin Panel](screenshots/admin-panel.png)
 ![Feature](screenshots/feature.png)
-![Dashboard](screenshots/dashboard.png)
+![Task Create](screenshots/task-create.png)
 ![Set By Priority](screenshots/set-by-priority.png)
+![Task Description](screenshots/task-description.png)
 
 
 
